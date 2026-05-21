@@ -1,12 +1,10 @@
 import { NativeModule, registerWebModule } from 'expo';
 
-import type { Config, ExpoObserveModuleType, ObserveAttributes } from './types';
+import type { ObserveConfig, ObserveModule, ObserveAttributes } from './types';
 
-export * from './types';
-
-class ExpoObserveModule extends NativeModule implements ExpoObserveModuleType {
+class ExpoObserveModule extends NativeModule implements ObserveModule {
   async dispatchEvents() {}
-  configure(config: Config): void {}
+  configure(config: ObserveConfig): void {}
   setGlobalAttributes(attributes?: ObserveAttributes | null): void {}
   setBundleDefaults(defaults: { environment: string; isJsDev: boolean }): void {}
 }

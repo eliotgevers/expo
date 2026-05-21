@@ -1,3 +1,4 @@
+import type { NativeModule } from 'expo';
 import type { LogAttributeValue } from 'expo-app-metrics';
 /**
  * Value types accepted as attribute values in `setGlobalAttributes` and the
@@ -10,7 +11,7 @@ export type ObserveAttribute = LogAttributeValue;
  * other Observe APIs that take a free-form attributes payload.
  */
 export type ObserveAttributes = Record<string, ObserveAttribute>;
-export type Config = {
+export type ObserveConfig = {
     /**
      * The environment for observability events
      *
@@ -60,9 +61,9 @@ export type Config = {
     /**
      * Opt in to per-integration behavior.
      */
-    integrations?: IntegrationsConfig;
+    integrations?: ObserveIntegrationsConfig;
 };
-export interface IntegrationsConfig {
+export type ObserveIntegrationsConfig = {
     /**
      * Enables the `expo-router` integration, which records navigation metrics
      * (`cold_ttr`, `warm_ttr`, `tti`) from router state changes.
@@ -83,13 +84,13 @@ export interface IntegrationsConfig {
      * @default false
      */
     'react-navigation'?: boolean;
-}
-export interface ExpoObserveModuleType {
+};
+export declare class ObserveModule extends NativeModule {
     dispatchEvents(): Promise<void>;
     /**
      * Configures observability settings.
      */
-    configure(config: Config): void;
+    configure(config: ObserveConfig): void;
     /**
      * Sets attributes merged into every subsequent metric and log event.
      * Per-record keys win on collision. Pass `null`, `undefined`, or an empty

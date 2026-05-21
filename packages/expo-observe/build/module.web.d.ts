@@ -1,9 +1,8 @@
 import { NativeModule } from 'expo';
-import type { Config, ExpoObserveModuleType, ObserveAttributes } from './types';
-export * from './types';
-declare class ExpoObserveModule extends NativeModule implements ExpoObserveModuleType {
+import type { ObserveConfig, ObserveModule, ObserveAttributes } from './types';
+declare class ExpoObserveModule extends NativeModule implements ObserveModule {
     dispatchEvents(): Promise<void>;
-    configure(config: Config): void;
+    configure(config: ObserveConfig): void;
     setGlobalAttributes(attributes?: ObserveAttributes | null): void;
     setBundleDefaults(defaults: {
         environment: string;
