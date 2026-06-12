@@ -1,5 +1,7 @@
 declare class FileSystemFile {
     constructor();
+    canPreview(_options?: unknown): Promise<boolean>;
+    preview(_options?: unknown): Promise<void>;
 }
 declare class FileSystemDirectory {
     constructor();

@@ -2,7 +2,7 @@ import type { SharedObject } from 'expo-modules-core';
 import type { Directory as PublicDirectory } from '../Directory';
 import type { DirectoryCreateOptions, DirectoryInfo } from '../Directory.types';
 import type { File as PublicFile } from '../File';
-import type { FileCreateOptions, FileHandle, FileInfo, FileMode, FileWriteOptions, InfoOptions, PickMultipleFilesOptions, PickMultipleFilesResult, PickSingleFileOptions, PickSingleFileResult, RelocationOptions } from '../File.types';
+import type { FileCreateOptions, FileCanPreviewOptions, FileHandle, FileInfo, FileMode, FilePreviewOptions, FileWriteOptions, InfoOptions, PickMultipleFilesOptions, PickMultipleFilesResult, PickSingleFileOptions, PickSingleFileResult, RelocationOptions } from '../File.types';
 import type { WatchEvent, WatchEventType, WatchOptions, WatchSubscription } from '../FileSystemWatcher.types';
 import type { DownloadTask, UploadTask } from '../NetworkTasks';
 import type { DownloadOptions, DownloadProgress, DownloadTaskOptions, UploadOptions, UploadProgress, UploadResult } from '../NetworkTasks.types';
@@ -213,6 +213,14 @@ export declare class NativeFileSystemFile {
      * @throws Error if the file does not exist or cannot be opened.
      */
     open(mode?: FileMode): FileHandle;
+    /**
+     * Determines whether the platform can preview this file.
+     */
+    canPreview(options?: FileCanPreviewOptions): Promise<boolean>;
+    /**
+     * Opens this file with the platform's file preview flow.
+     */
+    preview(options?: FilePreviewOptions): Promise<void>;
     upload(url: string, options?: UploadOptions): Promise<UploadResult>;
     createUploadTask(url: string, options?: UploadOptions): UploadTask;
     watch(callback: (event: WatchEvent<PublicFile>) => void, options?: WatchOptions): WatchSubscription;

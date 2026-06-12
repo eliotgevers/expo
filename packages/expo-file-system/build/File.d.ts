@@ -1,6 +1,6 @@
 import { Directory } from './Directory';
 import ExpoFileSystem from './ExpoFileSystem';
-import { type PickMultipleFilesOptions, type PickMultipleFilesResult, type PickSingleFileOptions, type PickSingleFileResult } from './File.types';
+import { type FileCanPreviewOptions, type FilePreviewOptions, type PickMultipleFilesOptions, type PickMultipleFilesResult, type PickSingleFileOptions, type PickSingleFileResult } from './File.types';
 import { type WatchEvent, type WatchOptions, type WatchSubscription } from './FileSystemWatcher.types';
 import { DownloadTask, UploadTask } from './NetworkTasks';
 import { type DownloadOptions, type DownloadTaskOptions, type UploadOptions, type UploadResult } from './NetworkTasks.types';
@@ -107,6 +107,32 @@ export declare class File extends ExpoFileSystem.FileSystemFile implements Blob 
     formData(): ReturnType<Response['formData']>;
     stream(): ReadableStream<Uint8Array<ArrayBuffer>>;
     slice(start?: number, end?: number, contentType?: string): Blob;
+    /**
+     * Determines whether the platform can preview this file.
+     *
+     * On iOS, this checks whether Quick Look can preview the file. On Android, this checks whether
+     * an installed app can handle the preview intent for the file's MIME type.
+     * Invalid files and files the app cannot read reject instead of returning `false`. If the file
+     * does not exist, the promise resolves to `false`.
+     *
+     * @param options Preview options.
+     * @returns A promise that resolves to `true` if the file can be previewed, and `false` otherwise.
+     * @platform android
+     * @platform ios
+     */
+    canPreview(options?: FileCanPreviewOptions): Promise<boolean>;
+    /**
+     * Opens this file with the platform's file preview flow.
+     *
+     * On iOS, this presents Quick Look. On Android, this starts an `ACTION_VIEW` intent.
+     * The promise resolves once the preview has been presented or handed off to another app.
+     * The promise rejects if the file does not exist or cannot be previewed.
+     *
+     * @param options Preview options.
+     * @platform android
+     * @platform ios
+     */
+    preview(options?: FilePreviewOptions): Promise<void>;
     /**
      * Uploads this file to a server and starts the request immediately.
      *
